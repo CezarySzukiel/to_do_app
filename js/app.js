@@ -24,7 +24,6 @@ function App() {
       if (task.id === id) {
         task.status = 'closed';
       }
-      console.log('skończony task: ', task)
       return task;
     });
     setTasks(newTasks);
@@ -32,7 +31,6 @@ function App() {
 
   useEffect(() => {
     getTasks((data) => {
-      console.log("data app: ", data);
       setTasks(data);
     });
   }, []);

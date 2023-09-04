@@ -1,32 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Operation from './Operation';
 
-export default function Operations({ operations }) {
+export default function Operations({ operations, formVisible, handleAddOperation }) {
+
+
   return (
     <>
-      <div className="card-body">
-        <form>
-          <div className="input-group">
-            <input type="text"
-              className="form-control"
-              placeholder="Operation description" />
+        {formVisible &&
+          <div className="card-body">
+            <form onSubmit={handleAddOperation}>
+              <div className="input-group">
+                <input type="text"
+                  className="form-control"
+                  placeholder="Operation description" />
 
-            <div className="input-group-append">
-              <button className="btn btn-info">
-                Add
-                <i className="fas fa-plus-circle ml-1"></i>
-              </button>
-            </div>
+                <div className="input-group-append">
+                  <button className="btn btn-info">
+                    Add
+                    <i className="fas fa-plus-circle ml-1"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-
-      <ul className="list-group list-group-flush">
-        {/* <!-- Komponenty Operation --> */}
-        {
-          operations && operations.map(operation => <Operation key={operation.id} operation={operation} />)
         }
-      </ul>
+
+        <ul className="list-group list-group-flush">
+            {/* <!-- Komponenty Operation --> */}
+            {
+              operations && operations.map(operation => <Operation key={operation.id} operation={operation} />)
+            }
+        </ul>
     </>
   )
 }

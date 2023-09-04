@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Operations from './Operations';
 import { updateTask, deleteTask } from "../api/tasks";
 
-import { getOperations } from '../api/operations';
+import { getOperations, addOperation } from '../api/operations';
 
 // TODO
 
@@ -14,21 +14,33 @@ import { getOperations } from '../api/operations';
 export default function Task({ task, onRemoveTask, onFinishTask }) {
 
   const [operations, setOperations] = useState(null);
+  const [formVisible, setFormVisible] = useState(false);
 
   const handleFinishTask = () => {
       task.status = 'closed';
-      return updateTask(task, onFinishTask(task.id));
+      return updateTask(task, () => onFinishTask(task.id));
     }
 
     const handleDeleteTask = () => {
-      return deleteTask(task, onRemoveTask(task.id));
-
+      return deleteTask(task, () => onRemoveTask(task.id));
     }
+
+    const handleDisplayAddOperationForm = () => {
+        setFormVisible(!formVisible);
+    }
+
+    const handleAddOperation = (e) => {
+        e.preventDefault();
+        const operation = {description: e.target[0].value, timeSpent: 0};
+        console.log('operation: ', operation);
+        addOperation(task, operation, (data) => {
+            setOperations([...operations, data]);
+        });
+  }
 
 
   useEffect(() => {
     getOperations(task.id, (data) => {
-      console.log("data: ", data);
       setOperations(data);
     })
   }, []);
@@ -46,7 +58,7 @@ export default function Task({ task, onRemoveTask, onFinishTask }) {
           {
             task.status === 'open' && (
               <>
-                <button className="btn btn-info btn-sm mr-2">
+                <button className="btn btn-info btn-sm mr-2" onClick={handleDisplayAddOperationForm}>
                   Add operation
                   <i className="fas fa-plus-circle ml-1"></i>
                 </button>
@@ -72,7 +84,7 @@ export default function Task({ task, onRemoveTask, onFinishTask }) {
           }
         </div>
       </div>
-      <Operations operations={operations} />
+      <Operations operations={operations} formVisible={formVisible} handleAddOperation={handleAddOperation}/>
     </section>
   )
 }
