@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Operations from './Operations';
-import { updateTask } from "../api/tasks";
+import { updateTask, deleteTask } from "../api/tasks";
 
 import { getOperations } from '../api/operations';
 
@@ -15,21 +15,23 @@ export default function Task({ task, onRemoveTask, onFinishTask }) {
 
   const [operations, setOperations] = useState(null);
 
+  const handleFinishTask = () => {
+      task.status = 'closed';
+      return updateTask(task, onFinishTask(task.id));
+    }
+
+    const handleDeleteTask = () => {
+      return deleteTask(task, onRemoveTask(task.id));
+
+    }
+
+
   useEffect(() => {
     getOperations(task.id, (data) => {
       console.log("data: ", data);
       setOperations(data);
     })
   }, []);
-
-    const handleFinishTask = () => {
-      task.status = 'closed';
-      return updateTask(task, onFinishTask);
-    }
-
-    const handleDeleteTask = () => {
-        console.log("task: ", task)
-    }
 
   return (
     <section className="card mt-5 shadow-sm">
@@ -70,9 +72,6 @@ export default function Task({ task, onRemoveTask, onFinishTask }) {
           }
         </div>
       </div>
-
-
-      {/* <!-- Komponent Operations --> */}
       <Operations operations={operations} />
     </section>
   )

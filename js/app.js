@@ -24,6 +24,7 @@ function App() {
       if (task.id === id) {
         task.status = 'closed';
       }
+      console.log('skończony task: ', task)
       return task;
     });
     setTasks(newTasks);
