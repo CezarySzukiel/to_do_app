@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Operations from './Operations';
+import { updateTask } from "../api/tasks";
 
 import { getOperations } from '../api/operations';
 
@@ -10,7 +11,7 @@ import { getOperations } from '../api/operations';
 // state (operations)
 // useEffect (fetch => operations)
 
-export default function Task({ task, onRemoveTask }) {
+export default function Task({ task, onRemoveTask, onFinishTask }) {
 
   const [operations, setOperations] = useState(null);
 
@@ -22,7 +23,12 @@ export default function Task({ task, onRemoveTask }) {
   }, []);
 
     const handleFinishTask = () => {
-    // TODO
+      task.status = 'closed';
+      return updateTask(task, onFinishTask);
+    }
+
+    const handleDeleteTask = () => {
+        console.log("task: ", task)
     }
 
   return (
@@ -35,10 +41,6 @@ export default function Task({ task, onRemoveTask }) {
 
 
         <div>
-          {/* <!--
-          Przyciski "Add operation" i "Finish" mają być widoczne
-          tylko jeżeli status zadania jest "open"
-          --> */}
           {
             task.status === 'open' && (
               <>
@@ -61,7 +63,7 @@ export default function Task({ task, onRemoveTask }) {
            --> */}
           {
             (operations && operations.length < 1) && (
-              <button className="btn btn-outline-danger btn-sm ml-2">
+              <button className="btn btn-outline-danger btn-sm ml-2" onClick={handleDeleteTask}>
                 <i className="fas fa-trash false"></i>
               </button>
             )

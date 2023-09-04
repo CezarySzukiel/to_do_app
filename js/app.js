@@ -19,6 +19,16 @@ function App() {
     setTasks(newTasks);
   }
 
+  const onFinishTask = (id) => {
+    const newTasks = tasks.map(task => {
+      if (task.id === id) {
+        task.status = 'closed';
+      }
+      return task;
+    });
+    setTasks(newTasks);
+  }
+
   useEffect(() => {
     getTasks((data) => {
       console.log("data app: ", data);
@@ -34,7 +44,7 @@ function App() {
     <>
       <NewTask onNewTask={onNewTask} />
       {
-        tasks && tasks.map(task => <Task key={task.id} task={task} onRemoveTask={onRemoveTask}/>)
+        tasks && tasks.map(task => <Task key={task.id} task={task} onRemoveTask={onRemoveTask} onFinishTask={onFinishTask}/>)
       }
     </>
   )
