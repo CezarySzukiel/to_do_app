@@ -26,7 +26,6 @@ export default function Operations({ operations, formVisible, handleAddOperation
         }
 
         <ul className="list-group list-group-flush">
-            {/* <!-- Komponenty Operation --> */}
             {
               operations && operations.map(operation => <Operation key={operation.id} operation={operation} />)
             }

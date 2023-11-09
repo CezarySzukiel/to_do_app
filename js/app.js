@@ -36,9 +36,6 @@ function App() {
   }, []);
 
 
-  // () removeTask localy
-
-
   return (
     <>
       <NewTask onNewTask={onNewTask} />

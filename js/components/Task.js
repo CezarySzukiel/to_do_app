@@ -4,12 +4,6 @@ import { updateTask, deleteTask } from "../api/tasks";
 
 import { getOperations, addOperation } from '../api/operations';
 
-// TODO
-
-// props
-// method handlers
-// state (operations)
-// useEffect (fetch => operations)
 
 export default function Task({ task, onRemoveTask, onFinishTask }) {
 
@@ -71,10 +65,6 @@ export default function Task({ task, onRemoveTask, onFinishTask }) {
             )
           }
 
-          {/* <!--
-          Przycisk usuwania ma być widoczny tylko
-          jeżeli nie ma żadnych operacji w zadaniu
-           --> */}
           {
             (operations && operations.length < 1) && (
               <button className="btn btn-outline-danger btn-sm ml-2" onClick={handleDeleteTask}>

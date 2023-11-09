@@ -63,15 +63,9 @@ export const updateTask = async (task, successCallback) => {
       body: JSON.stringify(task)
     });
     const data = await response.json();
-    // if (data.error || typeof successCallback !== "function") {
-    //   throw new Error("Błąd!");
-    // }
-     if (typeof successCallback !== "function") {
-      throw new Error("typeof Błąd!");
-    }
-      if (data.error) {
-      throw new Error("data Błąd!");
-    }
+     if (data.error || typeof successCallback !== "function") {
+       throw new Error("Błąd!");
+     }
     successCallback(data.data);
   }
   catch (err) {
@@ -89,17 +83,11 @@ try {
       },
     });
     const data = await response.json();
-    // if (data.error || typeof successCallback !== "function") {
-    //   throw new Error("Błąd!");
-    // }
-    if (typeof successCallback !== "function") {
-      throw new Error("typeof Błąd!");
-    }
-      if (data.error) {
-      throw new Error("data Błąd!");
-    }
+     if (data.error || typeof successCallback !== "function") {
+       throw new Error("Błąd!");
+     }
     successCallback(data.data);
-    }//todo wywalić to?
+    }
 
   catch (err) {
     console.log("error: ", err)
